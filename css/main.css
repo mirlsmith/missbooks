@@ -10,7 +10,7 @@
 /* TYPOGRAPHY */
 @font-face {
     font-family: lato;
-    src: url(/fonts/Lato/Lato-Regular.ttf);
+    src: url(fonts/Lato/Lato-Regular.ttf);
 }
 
 /* BASICS */
@@ -143,7 +143,7 @@ h1, h2, h3, h4, h5, h6, p, body {
 /* COMPONENTS */
 
 .home-page {
-    background-image: url(../../img/books-background.jpeg);
+    background-image: url(img/books-background.jpeg);
     height: 50vh;
     background-position: center;
     background-repeat: no-repeat;
