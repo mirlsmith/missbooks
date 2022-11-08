@@ -14,11 +14,11 @@ export const bookService = {
     save,
     getEmptyBook,
     addReview,
-    removeReview
+    removeReview,
+    addGoogleBook
 }
 
 function query() {
-    // return utilService.loadFromStorage(BOOKS_KEY)
     return storageService.query(BOOKS_KEY)
 }
 
@@ -27,22 +27,12 @@ function get(bookId){
 }
 
 function remove(bookId) {
-    // const books = query()
-    // const idx = books.findIndex(book => book.id === bookId)
-    // books.splice(idx, 1)
-    // utilService.saveToStorage(BOOKS_KEY, books)
     return storageService.remove(BOOKS_KEY,bookId)
 }
 
 function save(book) {
-    // book.id = utilService.makeId(4)
-    // const books = query()
-    // books.push(book)
-    // utilService.saveToStorage(BOOKS_KEY, books)
-    // return book
     if (book.id) return storageService.put(BOOKS_KEY, book)
     else return storageService.post(BOOKS_KEY, book)
-    
 }
 
 function getEmptyBook() {
@@ -69,7 +59,7 @@ function getEmptyBook() {
     }
 }
 
-function addReview(bookId, review){ //IS MOST OF THIS FUNCTION SUPPOSED TO BE DONE IN THE BOOK-DETAILS COMP?? //WHY DOES THE NEW REVIEW SHOW UP ONLY AFTER REFRESHING??
+function addReview(bookId, review){ 
     return storageService.get(BOOKS_KEY, bookId)
         .then(book => {
             if (book.reviews) book.reviews.push(review)
@@ -78,13 +68,30 @@ function addReview(bookId, review){ //IS MOST OF THIS FUNCTION SUPPOSED TO BE DO
         })
 }
 
-function removeReview(bookId, reviewId){ //IS MOST OF THIS FUNCTION SUPPOSED TO BE DONE IN THE BOOK-DETAILS COMP?? //WHY DOES THE REVIEW GET REMOVED ONLY AFTER REFRESHING??
+function removeReview(bookId, reviewId){ 
     return storageService.get(BOOKS_KEY, bookId)
         .then(book => {
             const idx = book.reviews.findIndex(review => review.id === reviewId)
             book.reviews.splice(idx,1)
             return storageService.put(BOOKS_KEY,book)
         })
+}
+
+function addGoogleBook(googleBook) {
+
+        const {id, volumeInfo} = googleBook
+        const thumbnail = volumeInfo.imageLinks?.thumbnail || '../../img/default-book-img.jpeg'
+        const {title, subtitle, description, authors, publishedDate, pageCount, categories, language} = volumeInfo
+        const amount = utilService.getRandomIntInclusive(10,200)
+        const currencyCode = 'USD'
+        const isOnSale = (utilService.getRandomIntInclusive(0,1) > 0.2) ? true : false
+        const listPrice = {amount, currencyCode, isOnSale}
+        
+        const book = {id, thumbnail, title, subtitle, description, 
+            authors, publishedDate, pageCount, categories,
+            language, listPrice}
+
+    return storageService.post(BOOKS_KEY, book, false)
 }
 
 function _createBooks() {
@@ -96,3 +103,6 @@ function _createBooks() {
     }
     return books
 }
+
+
+        

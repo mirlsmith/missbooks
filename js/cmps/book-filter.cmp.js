@@ -33,7 +33,8 @@ export default {
     },
     methods: {
         filter(){
-            this.$emit('filter', this.filterBy)
+            console.log('filtered');
+            this.$emit('filter', {...this.filterBy})
         }
 
     },

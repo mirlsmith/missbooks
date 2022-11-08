@@ -11,6 +11,7 @@ export default {
             
             <section class="books">
                 <book-filter @filter="filterBooks"/>
+                <button @click="moreBooks">Add more books</button>
                 <book-list
                     @remove="removeBook" 
                     :books="booksToShow"/>
@@ -48,6 +49,9 @@ export default {
         },
         filterBooks(filterBy){
             this.filterBy = filterBy
+        },
+        moreBooks(){
+            this.$router.push(`/book/add`)
         }
 
     },

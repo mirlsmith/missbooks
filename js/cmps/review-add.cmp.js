@@ -1,5 +1,6 @@
 export default {
     props: ['book'],
+    emits: ['added', 'canceled'],
     template: `
         <h1>Add review for {{book.title}}</h1>
         <button @click ="this.$emit('canceled')" class="btn-review-close">x</button>

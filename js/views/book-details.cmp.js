@@ -65,11 +65,9 @@ export default {
         },
         removeReview(reviewId) {
             bookService.removeReview(this.book.id, reviewId)
-                .then(() => {
+                .then((book) => {
                     
-                    //was this the right thing to do here?? 
-                    const idx = this.book.reviews.findIndex(review => review.id === reviewId)
-                    this.book.reviews.splice(idx, 1)
+                    this.book = book
 
                     const msg = {
                         txt: `Review deleted`,
@@ -81,10 +79,8 @@ export default {
         addReview(review) {
             bookService.addReview(this.book.id, review)
             .then(book => {
-                
-                //was this the right thing to do here?? 
-                    if (this.book.reviews) this.book.reviews.push(review)
-                    else this.book.reviews = [review]
+             
+                    this.book = book
 
                     const msg = {
                         txt: `Review saved`,
